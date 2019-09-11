@@ -26,5 +26,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function addUser(Request $request,UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $em)
+    public function addUser(Request $request,UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $em){
+
+    }
 }
