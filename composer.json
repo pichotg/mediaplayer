@@ -14,7 +14,7 @@
         "symfony/form": "3.4.*",
         "symfony/framework-bundle": "3.4.*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/orm-pack": "*",
+        "symfony/orm-pack": "^1.0",
         "symfony/process": "3.4.*",
         "symfony/security-bundle": "3.4.*",
         "symfony/serializer-pack": "*",
