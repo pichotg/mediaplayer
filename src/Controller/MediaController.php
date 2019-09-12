@@ -91,4 +91,26 @@ class MediaController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/media/delete{id}", name="delete_media" , requirements={"id"="\d+"})
+     */
+    public function delete(Media $media,Request $request, EntityManagerInterface $em)
+    {
+        $media = $em->getRepository(Media::class)->find($request->get('id'));
+
+        $filename = $media->getMedia();
+        $filesystem = new Filesystem();
+        $filesystem->remove($filename);
+
+        $filename = $media->getVignette();
+        $filesystem = new Filesystem();
+        $filesystem->remove($filename);
+
+        $em->remove($media);
+        $em->flush();
+        $this->addFlash('success', 'Media was deleted !');
+
+        return $this->redirectToRoute('media');
+    }
 }
