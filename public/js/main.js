@@ -9,7 +9,7 @@ $(document).ready( function () {
 
         $('#modalTitle').text(data[1]);
         if(data[7] == 'Audio'){
-            $('#modalBody').text('<audio controls><source src="../public/files/media/' + data[3] + '" type="audio/' + data[4] +'">Your browser does not support the audio element.</audio>');
+            $('#modalBody').html('<audio controls><source src="../public/files/media/' + data[3] + '" type="audio/' + data[4] +'">Your browser does not support the audio element.</audio>');
         } else if (data[7] == 'Video') {
             alert('Je suis un fichier vidéo');
             $('#modalBody').text();
