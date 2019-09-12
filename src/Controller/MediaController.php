@@ -6,6 +6,7 @@ use App\Entity\Media;
 use App\Form\MediaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -84,7 +85,7 @@ class MediaController extends Controller
             $em->flush();
             $this->addFlash('success', 'Media successfully added !');
 
-            return $this->redirectToRoute('add_media');
+            return $this->redirectToRoute('media');
         }
         return $this->render('media/add_media.html.twig', [
             'page_name' => 'Media Add',
@@ -99,20 +100,20 @@ class MediaController extends Controller
     {
         $media = $em->getRepository(Media::class)->find($request->get('id'));
 
-        $filenameMedia = $media->getMedia();
-        $filenameVignette = $media->getVignette();
+       $this->deleteFileMedia($media);
 
-        if ($filenameVignette && $filenameMedia) {
-
-            $filesystem = new Filesystem();
-
-            $filesystem->remove($filenameMedia);
-            $filesystem->remove($filenameVignette);
-        }
         $em->remove($media);
         $em->flush();
         $this->addFlash('success', 'Media was deleted !');
 
         return $this->redirectToRoute('media');
+    }
+
+    private function deleteFileMedia(Media $media){
+        $filenameMedia = $media->getMedia();
+        $filenameVignette = $media->getVignette();
+        $filesystem = new Filesystem();
+        $filesystem->remove("../public/files/media/".$filenameMedia);
+        $filesystem->remove("../public/files/vignette/".$filenameVignette);
     }
 }
