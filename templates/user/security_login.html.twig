@@ -31,6 +31,10 @@
                 <a href="{{ path('add_user') }}">You are new ? Go to the registration</a>
             </div>
 
+            <div class="form-group">
+                <a href="{{ path('forgot_password') }}">You have forget your password ? Click Here</a>
+            </div>
+
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <button type="submit" class="btn btn-primary">Login</button>

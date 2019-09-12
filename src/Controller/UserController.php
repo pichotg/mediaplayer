@@ -60,6 +60,29 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/forgot_password", name="forgot_password")
+     */
+    public function forgotPassword(Request $request){
+
+        $user = new User();
+        $formUser = $this->createForm(UserType::class);
+        $formUser->remove('name');
+        $formUser->remove('password');
+        $formUser->handleRequest($request);
+
+        if($formUser->isSubmitted() && $formUser->isValid()){
+            $user = $formUser->getData();
+
+            // Handle Mail HERE
+        }
+
+        return $this->render('user/security_forget_password.html.twig',[
+            'page_name' => 'Forget Password',
+            'formUser' => $formUser->createView()
+        ]);
+    }
+
+    /**
      * @Route("/logout", name="security_logout")
      */
     public function logout(){
