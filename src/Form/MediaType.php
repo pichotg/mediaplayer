@@ -42,6 +42,11 @@ class MediaType extends AbstractType
                             'video/ogv',
                             'video/3gp',
                             //Audio : aac, ogg, mp3
+                            'audio/aac',
+                            'audio/ogg',
+                            'audio/mp3',
+                            'audio/mpeg',
+
                         ],
                         'mimeTypesMessage' => 'Please upload a valid Media file',
                     ])
