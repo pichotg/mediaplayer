@@ -124,7 +124,8 @@ class UserController extends Controller
         }
 
         return $this->render('user/security_reset_password.html.twig',[
-            'page_name' => 'Reset Password'
+            'page_name' => 'Reset Password',
+            'formUser' => $formUser->createView()
         ]);
     }
 
