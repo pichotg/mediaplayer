@@ -73,7 +73,20 @@ class UserController extends Controller
         if($formUser->isSubmitted() && $formUser->isValid()){
             $user = $formUser->getData();
 
-            // Handle Mail HERE
+            $message = new \Swift_Message();
+            $message->setSubject("Sujet du mail")
+                ->setFrom("send@mail.org")
+                ->setTo("mail@mail.org")
+                ->setBody(
+                    $this->renderView("mail/index.html.twig"
+                        , ["param" => "mon param"])
+                    , "text/html");
+
+            $mailer->send($message);
+
+            return $this->render('mail/index.html.twig', [
+                'controller_name' => 'MailController',
+            ]);
         }
 
         return $this->render('user/security_forget_password.html.twig',[

@@ -5,6 +5,7 @@
         "php": "^7.0.8",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-intl": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "3.4.*",
         "symfony/console": "3.4.*",
@@ -18,13 +19,12 @@
         "symfony/process": "3.4.*",
         "symfony/security-bundle": "3.4.*",
         "symfony/serializer-pack": "*",
-        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/translation": "3.4.*",
         "symfony/twig-bundle": "3.4.*",
         "symfony/validator": "3.4.*",
         "symfony/web-link": "3.4.*",
-        "symfony/yaml": "3.4.*",
-      "ext-intl": "*"
+        "symfony/yaml": "3.4.*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
