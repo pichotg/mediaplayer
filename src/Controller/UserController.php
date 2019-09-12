@@ -19,7 +19,7 @@ class UserController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('security_login.html.twig', [
             'page_name' => 'Login',
             'last_username'=>$lastUsername,
             'error'=>$error
