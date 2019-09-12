@@ -84,15 +84,23 @@ class UserController extends Controller
 
             $mailer->send($message);
 
-            return $this->render('mail/index.html.twig', [
-                'controller_name' => 'MailController',
-                'email'=>$message
-            ]);
+            $this->addFlash('success','Mail was send to ' . $user->getEmail());
+
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('user/security_forget_password.html.twig',[
             'page_name' => 'Forget Password',
             'formUser' => $formUser->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/reset_password", name="reset_password")
+     */
+    public function resetPassword(){
+        return $this->render('user/security_reset_password.html.twig',[
+            'page_name' => 'Reset Password'
         ]);
     }
 
