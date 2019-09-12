@@ -1,6 +1,11 @@
 $(document).ready( function () {
-    $('#mediaTable').DataTable({
+    $('table').DataTable({
         'searching': false,
+    });
+
+    $('table').on('click','tr',function() {
+        var data = table.fnGetData( this );
+        alert(data);
     });
 
 } );
