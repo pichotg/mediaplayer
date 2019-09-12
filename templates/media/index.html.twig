@@ -16,6 +16,7 @@
                 <th scope="col">Ext. name</th>
                 <th scope="col">Vignette</th>
                 <th scope="col">Date</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
                         <td>{{ media.extension }}</td>
                         <td>{{ media.vignette }}</td>
                         <td>{{ media.date|date('Y-m-d') }}</td>
+                        <td>
+                            <a href="{{ path('delete_media', {'id': media.id}) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% else %}
