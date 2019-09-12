@@ -93,19 +93,18 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("/media/delete{id}", name="delete_media" , requirements={"id"="\d+"})
+     * @Route("/media/delete/{id}", name="delete_media" , requirements={"id"="\d+"})
      */
     public function delete(Media $media,Request $request, EntityManagerInterface $em)
     {
         $media = $em->getRepository(Media::class)->find($request->get('id'));
 
-        $filename = $media->getMedia();
+        $filenameMedia = $media->getMedia();
+        $filenameVignette = $media->getVignette();
         $filesystem = new Filesystem();
-        $filesystem->remove($filename);
 
-        $filename = $media->getVignette();
-        $filesystem = new Filesystem();
-        $filesystem->remove($filename);
+        $filesystem->remove($filenameMedia);
+        $filesystem->remove($filenameVignette);
 
         $em->remove($media);
         $em->flush();
