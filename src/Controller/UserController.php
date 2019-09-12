@@ -31,7 +31,6 @@ class UserController extends Controller
     /**
      * @Route("/add_user", name="add_user")
      */
-
     public function addUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
 
 
@@ -58,4 +57,12 @@ class UserController extends Controller
             'date'=>date('Y')
         ]);
     }
+
+    /**
+     * @Route("/logout", name="security_logout")
+     */
+    public function logout(){
+
+    }
+
 }
