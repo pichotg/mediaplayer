@@ -20,7 +20,7 @@ class UserController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'page_name' => 'Login',
             'last_username'=>$lastUsername,
             'error'=>$error
         ]);
