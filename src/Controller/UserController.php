@@ -35,16 +35,17 @@ class UserController extends Controller
 
 
         $user = new User();
-        $formUser = $this->createForm(UserType::class,$user);
+        $formUser = $this->createForm(UserType::class);
 
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
             $user = $formUser->getData();
 
+
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            $user->setRoles('ROLE_USER');
+            $user->addRole('ROLE_USER');
             $em->persist($user);
             $em->flush();
             $this->addFlash('success','User successfully added');

@@ -33,9 +33,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json_array")
      */
-    private $roles;
+    private $roles = [];
 
     public function getId(): ?int
     {
@@ -78,16 +78,30 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles(): ?string
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
     {
+        // TODO: Implement getRoles() method.
         return $this->roles;
+
     }
 
-    public function setRoles(string $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
+    public function addRole(string $role){
+        $this->roles[] = $role;
+        $this->roles = array_unique($this->roles);
     }
 
     /**
