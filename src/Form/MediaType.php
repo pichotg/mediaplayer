@@ -2,7 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
+use App\Entity\Genre;
 use App\Entity\Media;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,6 +21,13 @@ class MediaType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
+            ->add('genre', EntityType::class, [
+                'class' => Genre::class,
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+                }
+            ])
             ->add('media', FileType::class, [
                 'label' => 'Media file ( Video : 3gp, webm, ogv / Audio : aac, ogg, mp3 )',
                 'mapped' => false,

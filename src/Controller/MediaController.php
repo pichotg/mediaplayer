@@ -7,6 +7,7 @@ use App\Form\MediaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,6 +39,13 @@ class MediaController extends Controller
         // creat form
         $form = $this->createForm(MediaType::class, $media);
         $form->handleRequest($request);
+
+        $form->add('author', TextType::class, [
+            'attr' => array(
+                'readonly' => true,
+                'value' => $this->getUser()->getUsername()
+            ),
+        ]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $idea = $form->getData();

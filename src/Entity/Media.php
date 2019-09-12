@@ -17,6 +17,18 @@ class Media
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="medias")
+     * @ORM\JoinColumn(name="user", referencedColumnName="username")
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="medias")
+     * @ORM\JoinColumn(name="Genre", referencedColumnName="id")
+     */
+    private $genre;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
@@ -75,6 +87,18 @@ class Media
         return $this;
     }
 
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
     public function getMedia(): ?string
     {
         return $this->media;
@@ -121,5 +145,21 @@ class Media
         $this->date = $date;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * @param mixed $genre
+     */
+    public function setGenre($genre): void
+    {
+        $this->genre = $genre;
     }
 }
