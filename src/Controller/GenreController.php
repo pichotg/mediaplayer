@@ -19,7 +19,7 @@ class GenreController extends Controller
     public function list(Request $request, EntityManagerInterface $em)
     {
         $this->_genrelist = $em->getRepository(Genre::class)->findAll();
-
+        dump($this->_genrelist);
         return $this->render('genre/index.html.twig', [
             'page_name' => 'Genre',
             'genres' => $this->_genrelist

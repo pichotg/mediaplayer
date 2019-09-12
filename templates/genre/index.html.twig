@@ -27,10 +27,11 @@
                         <td scope="row">{{ genre.name }}</td>
                         <td scope="row">{{ genre.typemedia.name }}</td>
 
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_ADMIN') and genre.medias is empty %}
                             <td scope="row"><a href="{{ path('delete_genre', {'id': genre.id}) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                             <a href="{{ path('edit_genre', {'id': genre.id}) }}" class="btn btn-success"><i class="far fa-edit"></i></a></td>
-
+                            {% else %}
+                                <td scope="row"></td>
                             {% endif %}
 
                     </tr>
