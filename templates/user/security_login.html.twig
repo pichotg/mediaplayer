@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-group">
-                <a href="#">You are new ? Go to the registration</a>
+                <a href="{{ path('add_user') }}">You are new ? Go to the registration</a>
             </div>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
