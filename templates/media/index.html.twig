@@ -12,11 +12,12 @@
             <thead class="thead-dark text-center">
             <tr>
                 <th scope="col">Vignette</th>
-                <th scope="col">Title</th>
+                <th scope="col">Titre</th>
                 <th scope="col">Description</th>
                 <th scope="col">Ext. name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Type</th>
+                <th scope="col">Genre</th>
                 <th scope="col">Auteur</th>
                 <th scope="col">Player</th>
                 <th scope="col">Delete</th>
@@ -32,6 +33,7 @@
                         <td>{{ media.extension }}</td>
                         <td>{{ media.date|date('Y-m-d') }}</td>
                         <td>{{ media.genre.typemedia.name }}</td>
+                        <td>{{ media.genre.name }}</td>
                         <td>{{ media.author.name }}</td>
                         <td>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#playMediaModal" data-name="{{ media.titre }}" data-type="{{ media.genre.typemedia.name }}" data-path="./files/media/{{ media.media }}"><i class="fas fa-play"></i></button>
