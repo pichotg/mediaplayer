@@ -7,6 +7,7 @@ use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -99,27 +100,42 @@ class UserController extends Controller
     /**
      * @Route("/reset_password/{email}", name="reset_password")
      */
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, $email){
 
         $user = new User();
         $formUser = $this->createForm(UserType::class);
         $formUser->remove('email');
         $formUser->remove('name');
-        $formUser->add('password', PasswordType::class, [
-            'label' => 'New password'
+        $formUser->add('password', RepeatedType::class, [
+            'label' => 'New password',
+            'type' => PasswordType::class,
+            'invalid_message' => 'The password fields must match.',
+            'options' => ['attr' => ['class' => 'password-field']],
+            'required' => true,
+            'first_options'  => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password']
         ]);
-        $formUser->add('passwordConfirm', PasswordType::class, [
-            'label' => 'Confirm new password'
-        ]);
-
 
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
             $user = $formUser->getData();
-            $passwordC = $formUser->get('passwordConfirm');
-            dump($passwordC);
+            $userModif = $em->getRepository(User::class)->findOneBy(['email'=>$email]);
 
+            if (!$userModif) {
+                throw $this->createNotFoundException(
+                    'No user found for email '.$email
+                );
+            }
+            dump($userModif);
+            $userModif->setPassword('');
+            $password = $passwordEncoder->encodePassword($user, $formUser->getData()->getPassword());
+            $userModif->setPassword($password);
+            dump($userModif);
+            $em->persist($userModif);
+            $em->flush();
+            return $this->render('main/index.html.twig',[
+                'app_name' => 'Home']);
 
         }
 
