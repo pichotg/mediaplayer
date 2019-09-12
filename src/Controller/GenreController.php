@@ -27,6 +27,26 @@ class GenreController extends Controller
     }
 
     /**
+     * @Route("/genre/add" , name="add_genre")
+     */
+    public function add(Request $request, EntityManagerInterface $em){
+        $genre = new Genre();
+        $form = $this->createForm(GenreType::class, $genre);
+        $form -> handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $genre = $form->getData();
+            $em->persist($genre);
+            $em->flush();
+            $this->addFlash('success', 'Genre successfully added !');
+            return $this->redirectToRoute('genre');
+        }
+        return $this->render('genre/add_genre.html.twig', [
+            'page_name' => 'Genre Add',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/genre/{id}", name="edit_genre")
      */
     public function edit(Genre $genre, Request $request, EntityManagerInterface $em)

@@ -4,6 +4,8 @@
 namespace App\Form;
 
 use App\Entity\Genre;
+use App\Entity\TypeMedia;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,6 +19,15 @@ class GenreType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('typemedia', EntityType::class,  array(
+                'class' => TypeMedia::class,
+                'choice_label' => 'name',
+                "label_format" => "Media Type",
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                }
+            ))
             ->add('send', SubmitType::class)
         ;
     }
