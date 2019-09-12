@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -16,26 +18,40 @@ class MediaType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('media', FileType::class, [
-                'label' => 'Media file',
-                // unmapped means that this field is not associated to any entity property
+                'label' => 'Media file ( Video : 3gp, webm, ogv / Audio : aac, ogg, mp3 )',
                 'mapped' => false,
                 'required' => true,
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '5000k',
                         'mimeTypes' => [
                             'application/pdf',
                             'application/x-pdf',
+                            //Video : 3gp, webm, ogv
+                            //Audio : aac, ogg, mp3
                         ],
                         'mimeTypesMessage' => 'Please upload a valid Media file',
                     ])
                 ],
             ])
-            ->add('extension')
-            ->add('vignette')
-            ->add('date')
+            //->add('extension')
+            ->add('vignette', FileType::class, [
+                'label' => 'Vignette Image file (jpg, jpeg, png, gif)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4096k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                            // jpg, jpeg, png, gif
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Media file',
+                    ])
+                ],
+            ])
+            ->add('send', SubmitType::class)
         ;
     }
 
