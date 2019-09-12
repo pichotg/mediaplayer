@@ -27,6 +27,7 @@ class MediaType extends AbstractType
                         'mimeTypes' => [
                             //Video : 3gp, webm, ogv
                             'video/webm',
+                            'video/ogg',
                             'video/ogv',
                             'video/3gp',
                             //Audio : aac, ogg, mp3
