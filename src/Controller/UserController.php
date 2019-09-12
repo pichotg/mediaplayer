@@ -32,14 +32,16 @@ class UserController extends Controller
      * @Route("/add_user", name="add_user")
      */
 
-    public function addUser(Request $request,UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $em){
-        $user = new User();
+    public function addUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
 
+
+        $user = new User();
         $formUser = $this->createForm(UserType::class,$user);
 
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
+            $user = $formUser->getData();
 
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
@@ -47,7 +49,7 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
             $this->addFlash('success','User successfully added');
-            return $this->redirectToRoute('idea');
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('user/security_registration.html.twig',[
