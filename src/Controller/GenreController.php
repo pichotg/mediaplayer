@@ -22,7 +22,7 @@ class GenreController extends Controller
 
         return $this->render('genre/index.html.twig', [
             'page_name' => 'Genre',
-            'genre' => $this->_genrelist
+            'genres' => $this->_genrelist
         ]);
     }
 

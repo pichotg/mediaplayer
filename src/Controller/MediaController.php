@@ -35,20 +35,14 @@ class MediaController extends Controller
         $media = new Media();
         // set date creation
         $media->setDate(new \DateTime());
+        $media->setAuthor($this->getUser());
 
         // creat form
         $form = $this->createForm(MediaType::class, $media);
+
         $form->handleRequest($request);
 
-        $form->add('author', TextType::class, [
-            'attr' => array(
-                'readonly' => true,
-                'value' => $this->getUser()->getUsername()
-            ),
-        ]);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $idea = $form->getData();
             $fileMedia = $form['media']->getData();
 
             if ($fileMedia) {
