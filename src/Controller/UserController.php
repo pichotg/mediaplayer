@@ -62,7 +62,7 @@ class UserController extends Controller
     /**
      * @Route("/forgot_password", name="forgot_password")
      */
-    public function forgotPassword(Request $request){
+    public function forgotPassword(Request $request, \Swift_Mailer $mailer){
 
         $user = new User();
         $formUser = $this->createForm(UserType::class);
@@ -74,18 +74,19 @@ class UserController extends Controller
             $user = $formUser->getData();
 
             $message = new \Swift_Message();
-            $message->setSubject("Sujet du mail")
+            $message->setSubject("Changement de mot de passe")
                 ->setFrom("send@mail.org")
-                ->setTo("mail@mail.org")
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView("mail/index.html.twig"
-                        , ["param" => "mon param"])
+                        , ["email" => $user->getEmail()])
                     , "text/html");
 
             $mailer->send($message);
 
             return $this->render('mail/index.html.twig', [
                 'controller_name' => 'MailController',
+                'email'=>$message
             ]);
         }
 
