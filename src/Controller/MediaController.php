@@ -41,10 +41,10 @@ class MediaController extends Controller
 
             if ($fileMedia) {
                 $originalFilename = pathinfo($fileMedia->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileExtension = $fileMedia->guessExtension();
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $fileMedia->guessExtension();
-
+                $newFilename = $safeFilename . '-' . uniqid() . '.' .$fileExtension ;
                 // Move the file to the directory where brochures are stored
                 try {
                     $fileMedia->move(
@@ -54,6 +54,7 @@ class MediaController extends Controller
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
+                $media->setExtension($fileExtension);
                 $media->setMedia($newFilename);
             }
 
@@ -78,10 +79,9 @@ class MediaController extends Controller
             // ... persist the $product variable or any other work
             $em->persist($media);
             $em->flush();
-            $this->addFlash('success', 'Idea successfully added !');
+            $this->addFlash('success', 'Media successfully added !');
 
             return $this->redirectToRoute('add_media');
-
         }
         return $this->render('media/add_media.html.twig', [
             'page_name' => 'Media Add',

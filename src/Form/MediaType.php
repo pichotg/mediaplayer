@@ -25,9 +25,10 @@ class MediaType extends AbstractType
                     new File([
                         'maxSize' => '5000k',
                         'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
                             //Video : 3gp, webm, ogv
+                            'video/webm',
+                            'video/ogv',
+                            'video/3gp',
                             //Audio : aac, ogg, mp3
                         ],
                         'mimeTypesMessage' => 'Please upload a valid Media file',
@@ -43,11 +44,13 @@ class MediaType extends AbstractType
                     new File([
                         'maxSize' => '4096k',
                         'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/png',
+                            'image/gif',
                             // jpg, jpeg, png, gif
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid Media file',
+                        'mimeTypesMessage' => 'Please upload a valid vignette Media file',
                     ])
                 ],
             ])
