@@ -7,6 +7,13 @@
     <h1 class="text-center display-4 lead">{{ page_name }}</h1>
     {{ form_start(form) }}
 
+        {{ form_errors(form) }}
+
+        {{ form_row(form.titre) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.media) }}
+        {{ form_row(form.vignette) }}
+        {{ form_row(form.send) }}
     {{ form_end(form) }}
 
 </div>
