@@ -101,11 +101,14 @@ class MediaController extends Controller
 
         $filenameMedia = $media->getMedia();
         $filenameVignette = $media->getVignette();
-        $filesystem = new Filesystem();
 
-        $filesystem->remove($filenameMedia);
-        $filesystem->remove($filenameVignette);
+        if ($filenameVignette && $filenameMedia) {
 
+            $filesystem = new Filesystem();
+
+            $filesystem->remove($filenameMedia);
+            $filesystem->remove($filenameVignette);
+        }
         $em->remove($media);
         $em->flush();
         $this->addFlash('success', 'Media was deleted !');
