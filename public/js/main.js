@@ -9,10 +9,9 @@ $(document).ready( function () {
 
         $('#modalTitle').text(data[1]);
         if(data[7] == 'Audio'){
-            $('#modalBody').html('<audio controls><source src="../public/files/media/' + data[3] + '" type="audio/' + data[4] +'">Your browser does not support the audio element.</audio>');
+            $('#modalBody').html('<audio controls><source src="./files/media/' + data[3] + '" type="audio/mp3">Your browser does not support the audio element.</audio>');
         } else if (data[7] == 'Video') {
-            alert('Je suis un fichier vidéo');
-            $('#modalBody').text();
+            $('#modalBody').html('<video width="320" height="240" controls><source src="./files/media/' + data[3] + '" type="audio/ogg">Your browser does not support the video element.</video>');
         }
 
         $('#playMediaModal').modal().show();
@@ -20,11 +19,6 @@ $(document).ready( function () {
 
     var genreTable = $('#genreTable').DataTable({
         'searching': false,
-    });
-
-    genreTable.on('click','tr',function() {
-        var data = genreTable.row( this ).data();
-        alert(data);
     });
 
 } );
