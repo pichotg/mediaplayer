@@ -21,7 +21,7 @@ class UserController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security_login.html.twig', [
+        return $this->render('user/security_login.html.twig', [
             'page_name' => 'Login',
             'last_username'=>$lastUsername,
             'error'=>$error
@@ -50,7 +50,8 @@ class UserController extends Controller
             return $this->redirectToRoute('idea');
         }
 
-        return $this->render('main/index.html.twig',[
+        return $this->render('user/security_registration.html.twig',[
+            'page_name' => 'Registration',
             'formUser'=>$formUser->createView(),
             'date'=>date('Y')
         ]);
