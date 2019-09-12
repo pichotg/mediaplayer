@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -96,9 +97,32 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/reset_password", name="reset_password")
+     * @Route("/reset_password/{email}", name="reset_password")
      */
-    public function resetPassword(){
+    public function resetPassword(Request $request){
+
+        $user = new User();
+        $formUser = $this->createForm(UserType::class);
+        $formUser->remove('email');
+        $formUser->remove('name');
+        $formUser->add('password', PasswordType::class, [
+            'label' => 'New password'
+        ]);
+        $formUser->add('passwordConfirm', PasswordType::class, [
+            'label' => 'Confirm new password'
+        ]);
+
+
+        $formUser->handleRequest($request);
+
+        if($formUser->isSubmitted() && $formUser->isValid()){
+            $user = $formUser->getData();
+            $passwordC = $formUser->get('passwordConfirm');
+            dump($passwordC);
+
+
+        }
+
         return $this->render('user/security_reset_password.html.twig',[
             'page_name' => 'Reset Password'
         ]);
