@@ -41,7 +41,7 @@ class UserController extends Controller
 
         if($formUser->isSubmitted() && $formUser->isValid()){
 
-            $password = $passwordEncoder->encodePassword($user, $user->getMotdepasse());
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setRoles('ROLE_USER');
             $em->persist($user);
