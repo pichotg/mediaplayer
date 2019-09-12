@@ -20,6 +20,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Type</th>
                 <th scope="col">Auteur</th>
+                <th scope="col">Player</th>
                 <th scope="col">Delete</th>
             </tr>
             </thead>
@@ -37,13 +38,16 @@
                         <td>{{ media.genre.typemedia.name }}</td>
                         <td>{{ media.author.name }}</td>
                         <td>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#playMediaModal" data-name="{{ media.titre }}" data-type="{{ media.genre.typemedia.name }}" data-path="./files/media/{{ media.media }}"><i class="fas fa-play"></i></button>
+                        </td>
+                        <td>
                             <a href="{{ path('delete_media', {'id': media.id}) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr class="text-center">
-                    <th class="text-center text-muted" scope="row" colspan="8">No Media found...</th>
+                    <th class="text-center text-muted" scope="row" colspan="11">No Media found...</th>
                 </tr>
             {% endif %}
             </tbody>
@@ -54,12 +58,12 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary lead">
-                        <h5 id="modalTitle" class="modal-title text-white">Media player</h5>
+                        <h5 class="modal-title text-white">Media player</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modalBody" class="modal-body">
+                    <div class="modal-body">
 
                     </div>
                     <div class="modal-footer">
