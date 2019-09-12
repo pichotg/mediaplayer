@@ -20,28 +20,8 @@ class GenreController extends Controller
     {
         $this->_genrelist = $em->getRepository(Genre::class)->findAll();
 
-        $category = new Genre();
-        $form = $this->createForm(GenreType::class, $category);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $category = $form->getData();
-
-            $em->persist($category);
-            $em->flush();
-            $this->addFlash('success', 'Category successfully added !');
-
-            $this->_genrelist = $em->getRepository(Genre::class)->findAll();
-        }
-
-        foreach ($this->_genrelist as $cat){
-            $i = $cat->getIdeas();
-            dump($i);
-        }
-
         return $this->render('genre/index.html.twig', [
             'page_name' => 'Genre',
-            'form' => $form->createView(),
             'genre' => $this->_genrelist
         ]);
     }

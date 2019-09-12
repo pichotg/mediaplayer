@@ -22,7 +22,7 @@ class TypeMedia
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Genre", mappedBy="typemedias")
+     * @ORM\OneToMany(targetEntity="App\Entity\Genre", mappedBy="typemedia")
      */
     private $genres;
 

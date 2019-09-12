@@ -70,4 +70,20 @@ class Genre
     {
         $this->$medias = $medias;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTypemedia()
+    {
+        return $this->typemedia;
+    }
+
+    /**
+     * @param mixed $typemedia
+     */
+    public function setTypemedia($typemedia)
+    {
+        $this->typemedia = $typemedia;
+    }
 }

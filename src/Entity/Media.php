@@ -18,7 +18,7 @@ class Media
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="medias")
-     * @ORM\JoinColumn(name="user", referencedColumnName="username")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $author;
 
@@ -42,6 +42,7 @@ class Media
      * @ORM\Column(type="string", length=255)
      */
     private $media;
+
 
     /**
      * @ORM\Column(type="string", length=255)

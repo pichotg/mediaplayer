@@ -18,7 +18,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -36,6 +36,11 @@ class User implements UserInterface
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="author")
+     */
+    private $medias;
 
     public function getId(): ?int
     {
@@ -102,6 +107,22 @@ class User implements UserInterface
     public function addRole(string $role){
         $this->roles[] = $role;
         $this->roles = array_unique($this->roles);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    /**
+     * @param mixed $medias
+     */
+    public function setMedias($medias)
+    {
+        $this->medias = $medias;
     }
 
     /**
