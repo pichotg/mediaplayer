@@ -1,0 +1,56 @@
+version: '3.7'
+services:
+    apache:
+        build: .docker/apache
+        container_name: mediaplayer_apache
+        restart: unless-stopped
+        ports:
+          - 9080:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/home/www/mediaplayer:cached
+        depends_on:
+          - php
+
+    mysql:
+        image: mysql:8
+        container_name: mediaplayer_mysql
+        restart: unless-stopped
+        volumes:
+            - .docker/data/db:/var/lib/mysql
+        command:
+            - "--default-authentication-plugin=mysql_native_password"
+            - "--lower_case_table_names=1"        
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: mediaplayer
+
+    php:
+        build: .docker/php
+        container_name: mediaplayer_php
+        volumes:
+          - .:/home/www/mediaplayer:cached
+        environment:
+          - maildev_host=mediaplayer_maildev
+        depends_on:
+          - maildev
+          - mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: mediaplayer_phpmyadmin
+        restart: unless-stopped
+        environment:
+          PMA_HOST: mysql
+          PMA_PORT: 3306
+        ports:
+            - 9081:80
+        links:
+            - mysql
+
+    maildev:
+        image: djfarrelly/maildev
+        container_name: mediaplayer_maildev
+        restart: unless-stopped
+        ports:
+          - 9001:80
